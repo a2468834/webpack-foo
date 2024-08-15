@@ -1,30 +1,33 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack")
+const path = require("path")
 
 module.exports = {
-    entry: './src/emulator.ts',
+    entry: "./src/emulator.ts",
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
+                test: /\.ts?$/,
+                use: "ts-loader",
+                exclude: [
+                    path.resolve(__dirname, "node_modules"),
+                    path.resolve(__dirname, "src", "test.js")
+                ],
             },
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: [".tsx", ".ts", ".js"],
         fallback: {
-            "crypto": require.resolve("crypto-browserify"),
-            "buffer": require.resolve("buffer/"),
-            "stream": require.resolve("stream-browserify"),
-            "vm": require.resolve("vm-browserify"),
-        }
+            crypto: require.resolve("crypto-browserify"),
+            buffer: require.resolve("buffer/"),
+            stream: require.resolve("stream-browserify"),
+            vm: require.resolve("vm-browserify"),
+        },
     },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        library: 'MyEmulator'
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "dist"),
+        libraryTarget: "commonjs2",
     },
-    mode: 'none',
-};
+    mode: "none",
+}
